@@ -116,23 +116,56 @@ public class Tree {
     }
 
     //delete 0 anak
-    public boolean delete (int key) {
+//    public boolean delete (int key) {
+//        Node curr = root;
+//
+//        if (curr.getData() != key) {
+//            while(curr != null) {
+//                if (curr.getData() == key) {
+//                    curr.getParent().setLeftNode(null);
+//                    break;
+//                }if (curr.getData() > key) {
+//                    curr = curr.getLeftNode();
+//                } else {
+//                    curr = curr.getRightNode();
+//                }
+//            }
+//        } else {
+//            return true;
+//        }
+//        return true;
+//    }
+
+    public boolean delete (int key) { // node with 0 child
         Node curr = root;
-        while(curr != null) {
-            if (curr.getData() != key) {
-                if (curr.getData() > key) {
-                    curr = curr.getLeftNode();
-                } else {
-                    curr = curr.getRightNode();
-                }
+
+        if (curr.getData() == key) {
+            return true;
+        } else {
+            if (curr.getData() > key) {
+                deleteHelper(key, curr.getLeftNode());
             } else {
-                curr.setLeftNode(null);
-                return true;
+                deleteHelper(key, curr.getRightNode());
             }
         }
         return false;
     }
 
+    private void deleteHelper(int key, Node node) { // node with 0 child
+        Node curr = node;
 
+        while(curr.getData() != key) {
+            if (curr.getData() > key) {
+                curr = curr.getLeftNode();
+            } else {
+                curr = curr.getRightNode();
+            }
+        }
 
+        if (curr.getParent().getData() > key) {
+            curr.getParent().setLeftNode(null);
+        } else {
+            curr.getParent().setRightNode(null);
+        }
+    }
 }

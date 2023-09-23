@@ -8,6 +8,9 @@ public class Main {
         for (int i = 0; i < arr.length; i++) {
             pohon.insertNode(arr[i]);
         }
+        pohon.delete(2);
+        pohon.delete(12);
+        pohon.delete(6);
         pohon.inOrderTraversal();
     }
 }
