@@ -1,29 +1,57 @@
 package SDNL.TreeDelete;
 
 public class Tree {
-    private TreeNode root;
+    private Node root;
 
-    public Tree() {}
-
-    public Tree(TreeNode node) {
-        
+    public Tree() {
+        this.root = null;
     }
 
-    public void insert(int data) {}
+    public Tree(Node node) {
+        this.root = node;
+    }
 
-    public TreeNode getRoot() {
+    public void insertNode(int data) {
+        Node newNode = new Node(data, null);
+        if(root == null) {
+            root = newNode;
+            return;
+        }
+
+        Node curr = root;
+        while (curr != null) {
+            if (curr.getData() > newNode.getData()) {
+                if (curr.getLeftNode() == null) {
+                    curr.setLeftNode(newNode);
+                    newNode.setParent(curr);
+                    return;
+                }
+                curr = curr.getLeftNode();
+
+            } else if (curr.getData() < newNode.getData()) {
+                if (curr.getRightNode() == null) {
+                    curr.setRightNode(newNode);
+                    newNode.setParent(curr);
+                    return;
+                }
+                curr = curr.getRightNode();
+            }
+        }
+    }
+
+    public Node getRoot() {
         return root;
     }
 
-    public void setRoot(TreeNode root) {
+    public void setRoot(Node root) {
         this.root = root;
     }
 
-    public TreeNode find(int dataSearch) {
+    public Node find(int dataSearch) {
         return findHelper(dataSearch, root);
     }
 
-    private TreeNode findHelper(int dataSearch, TreeNode node) {
+    private Node findHelper(int dataSearch, Node node) {
         if (node == null || node.getData() == dataSearch) {
             return node;
         }
@@ -36,11 +64,11 @@ public class Tree {
     }
 
     public void preOrderTraversal() {
-        TreeNode pointer = root;
+        Node pointer = root;
         preOrderHelper(pointer);
     }
 
-    private void preOrderHelper(TreeNode node) {
+    private void preOrderHelper(Node node) {
         System.out.print(node.getData() + " ");
 
         if (node.getLeftNode() != null) {
@@ -53,11 +81,11 @@ public class Tree {
     }
 
     public void inOrderTraversal() {
-        TreeNode pointer = root;
+        Node pointer = root;
         inOrderHelper(pointer);
     }
 
-    private void inOrderHelper(TreeNode node) {
+    private void inOrderHelper(Node node) {
         if (node.getLeftNode() != null) {
             inOrderHelper(node.getLeftNode());
         }
@@ -70,11 +98,11 @@ public class Tree {
     }
 
     public void posOrderTraversal() {
-        TreeNode pointer = root;
+        Node pointer = root;
         posOrderHelper(pointer);
     }
 
-    private void posOrderHelper(TreeNode node) {
+    private void posOrderHelper(Node node) {
 
         if (node.getLeftNode() != null) {
             posOrderHelper(node.getLeftNode());
@@ -85,6 +113,24 @@ public class Tree {
         }
 
         System.out.print(node.getData() + " ");
+    }
+
+    //delete 0 anak
+    public boolean delete (int key) {
+        Node curr = root;
+        while(curr != null) {
+            if (curr.getData() != key) {
+                if (curr.getData() > key) {
+                    curr = curr.getLeftNode();
+                } else {
+                    curr = curr.getRightNode();
+                }
+            } else {
+                curr.setLeftNode(null);
+                return true;
+            }
+        }
+        return false;
     }
 
 
