@@ -2,9 +2,7 @@ package SDNL.TreeDelete;
 
 public class Node {
     private int data;
-    private Node leftNode;
-    private Node rightNode;
-    private Node parent;
+    private Node leftNode, rightNode ,parent;
 
     public Node(int data, Node parent) {
         this.data = data;
@@ -46,10 +44,10 @@ public class Node {
     }
 
     public void insert(int data) {
-        if (parent.getData() > data) {
-            parent.setLeftNode(new Node(data, parent));
+        if (this.getData() > data) {
+            this.setLeftNode(new Node(data, this));
         } else {
-            parent.setRightNode(new Node(data, parent));
+            this.setRightNode(new Node(data, this));
         }
     }
 }
