@@ -71,84 +71,85 @@ public class Tree {
     }
 
     public void preOrderTraversal() {             //method pre order
-        Node pointer = root;                      //
-        preOrderHelper(pointer);
+        Node pointer = root;                      //node pointer menunjuk ke root
+        preOrderHelper(pointer);                  //memasukan parameter pointer ke dalam method preOrderHelp
     }
 
-    private void preOrderHelper(Node node) {
-        System.out.print(node.getData() + " ");
+    private void preOrderHelper(Node node) {    //preOrderHelp
+        System.out.print(node.getData() + " "); //menampilkan nilai node
 
-        if (node.getLeftNode() != null) {
-            preOrderHelper(node.getLeftNode());
+        if (node.getLeftNode() != null) {       //jika node memiliki kiri
+            preOrderHelper(node.getLeftNode()); //rekursif preOrderhelper menggunakan kiri
         }
 
-        if (node.getRightNode() != null) {
-            preOrderHelper(node.getRightNode());
-        }
-    }
-
-    public void inOrderTraversal() {
-        Node pointer = root;
-        inOrderHelper(pointer);
-    }
-
-    private void inOrderHelper(Node node) {
-        if (node.getLeftNode() != null) {
-            inOrderHelper(node.getLeftNode());
-        }
-
-        System.out.print(node.getData() + " ");
-
-        if (node.getRightNode() != null) {
-            inOrderHelper(node.getRightNode());
+        if (node.getRightNode() != null) {      //jika node memiliki kanan
+            preOrderHelper(node.getRightNode());//rekursif preOrderhelper menggunakan kanan
         }
     }
 
-    public void posOrderTraversal() {
-        Node pointer = root;
-        posOrderHelper(pointer);
+    public void inOrderTraversal() {            //method inOrder
+        Node pointer = root;                    //node pointer menunjuk ke root
+        inOrderHelper(pointer);                 //memasukan parameter pointer ke dalam method inOrderHelper
     }
 
-    private void posOrderHelper(Node node) {
-
-        if (node.getLeftNode() != null) {
-            posOrderHelper(node.getLeftNode());
+    private void inOrderHelper(Node node) {     //inOrder
+        if (node.getLeftNode() != null) {       //jika node memiliki kiri
+            inOrderHelper(node.getLeftNode());  //rekursif inOrderHelper menggunakan kiri
         }
 
-        if (node.getRightNode() != null) {
-            posOrderHelper(node.getRightNode());
-        }
+        System.out.print(node.getData() + " "); //menampilkan data node
 
-        System.out.print(node.getData() + " ");
+        if (node.getRightNode() != null) {      //jika node memiliki kanan
+            inOrderHelper(node.getRightNode()); //rekursif inOrderHelper menggunakan kanan
+        }
     }
 
-    public boolean delete (int key) {
-        Node node = find(key);
-        Node parent = null;
+    public void postOrderTraversal() {          //postOrder
+        Node pointer = root;                    //node pointer menunjuk ke root
+        postOrderHelper(pointer);               //memasukan parameter pointer ke dalam method postOrderHelper
+    }
 
-        if (node == null || node.getData() != key) {
+    private void postOrderHelper(Node node) { //postOrderHelper
+
+        if (node.getLeftNode() != null) {           //jika node memiliki kiri
+            postOrderHelper(node.getLeftNode());    //rekursif postOrderHelper menggunakan kiri
+        }
+
+        if (node.getRightNode() != null) {          //jika node memiliki kanan
+            postOrderHelper(node.getRightNode());   //rekursif postOrderHelper menggunakan kanan
+        }
+
+        System.out.print(node.getData() + " ");     //menampilkan nilai node
+    }
+
+    public boolean delete (int key) {               //delete dengan 1 parameter yaitu key (user input)
+        Node node = find(key);                      //METHOD GETCURRENT SAMA PERSIS SEPERTI FIND
+                                                    //SEHINGGA SAYA MENGGUNAKAN FIND SAJA
+        Node parent = null;                         //set parent menjadi null
+
+        if (node == null || node.getData() != key) {    //cek node adalah null atau node.getData tidak sama key
             return false;
         } else {
             if (node.getLeftNode() == null && node.getRightNode() == null) { // 0 node
-                parent = node.getParent();
-                if (parent.getData() > key) {
-                    parent.setLeftNode(null);
+                parent = node.getParent();                                   //parent menjadi node.getParent()
+                if (parent.getData() > key) {                                //jika data parent lebih besar dari key
+                    parent.setLeftNode(null);                                //set kiri parent menjadi null
 
-                } if (parent.getData() < key) {
-                    parent.setRightNode(null);
+                } if (parent.getData() < key) {                              //jika data parent lebih besar kecil key
+                    parent.setRightNode(null);                               //set kanan parent menjadi null
 
                 }
-            } else if (node.getRightNode() == null) { //1 node
-                parent = node.getParent();
-                parent.setRightNode(node.getLeftNode());
-                node.getLeftNode().setParent(parent);
+            } else if (node.getRightNode() == null) { //1 node           ==>> jika ditemukan node kiri
+                parent = node.getParent();                                   //parent menjadi node.getParent()
+                parent.setRightNode(node.getLeftNode());                     //set kanan parent agar terhubung dengan node kiri
+                node.getLeftNode().setParent(parent);                        //set parent node kiri menggunakan variabel parent
 
                 return true;
 
-            } else if (node.getLeftNode() == null) { // 1 node
-                parent = node.getParent();
-                node.getRightNode().setParent(parent);
-                parent.setLeftNode(node.getRightNode());
+            } else if (node.getLeftNode() == null) { // 1 node           ==>> jika ditemukan node kanan
+                parent = node.getParent();                                    //parent menjadi node.getParent()
+                node.getRightNode().setParent(parent);                        //set kiri parent agar terhubung dengan node kanan
+                parent.setLeftNode(node.getRightNode());                      //set parent node kanan menggunakan variabel parent
 
                 return true;
             } else {    //2 node
@@ -204,8 +205,8 @@ public class Tree {
         printStructureV1(curr.getRightNode(), depth + 1);
     }
 
-    public void cetak() {             //method pre order
-        Node node = root;                      //
+    public void cetak() {
+        Node node = root;
         cetakBantu(node);
     }
 
