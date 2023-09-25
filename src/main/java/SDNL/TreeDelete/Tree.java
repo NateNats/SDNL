@@ -11,6 +11,14 @@ public class Tree {
         this.root = node;
     }
 
+    public Node getRoot() {                         //method getRoot
+        return root;
+    }
+
+    public void setRoot(Node root) {                //method setRoot
+        this.root = root;
+    }
+
     public void insertNode(int data) {
         Node newNode = new Node(data, null);
         if(root == null) {
@@ -45,29 +53,22 @@ public class Tree {
         }
     }
 
-    public Node getRoot() {                         //method getRoot
-        return root;
-    }
 
-    public void setRoot(Node root) {                //method setRoot
-        this.root = root;
-    }
-
-    public Node find(int dataSearch) {                              //method find dengan parameter satu parameter yaitu dataSearch
-        return findHelper(dataSearch, root);                        //memasukan parameter dataSearch dan root ke dalam method findHelper
+    public Node getCurrent(int dataSearch) {                              //method find dengan parameter satu parameter yaitu dataSearch
+        return getCurrentHelper(dataSearch, root);                        //memasukan parameter dataSearch dan root ke dalam method findHelper
                                                                     //lalu mengembalikan sebuah node yang akan dilepas
     }
 
-    private Node findHelper(int dataSearch, Node node) {            //method findHelper bertipe Node dengan dua parameter, dataSearch dan node
+    private Node getCurrentHelper(int dataSearch, Node node) {            //method findHelper bertipe Node dengan dua parameter, dataSearch dan node
         if (node == null || node.getData() == dataSearch) {         //mengecek apakah node == null atau node.getData() == dataSearch
             return node;                                            //jika ya, maka kembalikan node
         }
 
         if (node.getData() < dataSearch) {                          //jika node.getData() < dataSearch
-            return findHelper(dataSearch, node.getRightNode());     //maka lakukan rekursif dengan parameter detaSearch dan node.getRightNode()
+            return getCurrentHelper(dataSearch, node.getRightNode());     //maka lakukan rekursif dengan parameter detaSearch dan node.getRightNode()
         }
 
-        return findHelper(dataSearch, node.getLeftNode());          //mengembalikan node setelah melakukan method findHelper
+        return getCurrentHelper(dataSearch, node.getLeftNode());          //mengembalikan node setelah melakukan method findHelper
     }
 
     public void preOrderTraversal() {             //method pre order
@@ -123,7 +124,7 @@ public class Tree {
     }
 
     public boolean delete (int key) {               //delete dengan 1 parameter yaitu key (user input)
-        Node node = find(key);                      //METHOD GETCURRENT SAMA PERSIS SEPERTI FIND
+        Node node = getCurrent(key);                      //METHOD GETCURRENT SAMA PERSIS SEPERTI FIND
                                                     //SEHINGGA SAYA MENGGUNAKAN FIND SAJA
         Node parent = null;                         //set parent menjadi null
 
@@ -210,7 +211,7 @@ public class Tree {
         cetakBantu(node);
     }
 
-    private void cetakBantu(Node node) {
+    public void cetakBantu(Node node) {
         boolean isLeft, isRight;
 
         System.out.println("nilai node: " + node.getData());
@@ -237,6 +238,5 @@ public class Tree {
         if (isRight) {
             cetakBantu(node.getRightNode());
         }
-
     }
 }

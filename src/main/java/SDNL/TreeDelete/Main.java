@@ -1,7 +1,10 @@
 package SDNL.TreeDelete;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         Node node = new Node(50, null);
         Tree p = new Tree(node);
 
@@ -10,18 +13,45 @@ public class Main {
         for (int i = 0; i < arr.length; i++) {
             p.insertNode(arr[i]);
         }
-//        p.printStructureV1(node, arr.length);
-//
-//        p.cetak();
-        p.delete(30);
-        p.delete(65);
-        p.cetak();
 
-//        p.delete(30);
-//        Node n = p.find(45);
-//        System.out.println("Nilai node: " + n.getData());
-//        System.out.println("Nilai parent: " + n.getParent().getData());
-//        System.out.println("child kiri: " + ((n.getLeftNode() == null) ? "tidak ada": n.getLeftNode().getData()));
-//        System.out.println("Child kanan: " + ((n.getRightNode() == null) ? "tidak ada": n.getRightNode().getData()));
+        while(true) {
+            System.out.println();
+            System.out.print("""
+                    1. Hapus nilai
+                    2. Masukan nilai
+                    3. Tampilkan tree
+                    4. Cek detail node
+                    Input:\s""");
+            int pilihan = sc.nextInt();
+            if (pilihan == 1) {
+                System.out.println("Menampilkan data secara in order: ");
+                p.inOrderTraversal();
+                System.out.print("\nMasukan nilai yang akan dihapus: ");
+                System.out.println((p.delete(sc.nextInt()) ? "Data berhasil dihapus" : "Data tidak berhasil di hapus"));
+
+            } else if (pilihan == 2) {
+                System.out.print("Masukan nilai: ");
+                p.insertNode(sc.nextInt());
+
+            } else if (pilihan == 3){
+                System.out.println("Menampilkan secara in order: ");
+                p.inOrderTraversal();
+                System.out.println("\nMenampilkan secara pre order: ");
+                p.preOrderTraversal();
+                System.out.println("\nMenampilkan secara post order: ");
+                p.postOrderTraversal();
+
+            } else if (pilihan == 4){
+                p.preOrderTraversal();
+                System.out.print("node berapa? ");
+                int masukan = sc.nextInt();
+                Node n = p.getCurrent(masukan);
+                p.cetakBantu(n);
+
+            } else {
+                break;
+
+            }
+        }
     }
 }
