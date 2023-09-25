@@ -39,38 +39,39 @@ public class Tree {
                     return;
 
                 } else {
-                    curr = curr.getRightNode(); //Jika getLeftNode tidak null, maka ubah curr menjadi curr.getRightNode
+                    curr = curr.getRightNode();     //Jika getLeftNode tidak null, maka ubah curr menjadi curr.getRightNode
                 }
             }
         }
     }
 
-    public Node getRoot() {
+    public Node getRoot() {                         //method getRoot
         return root;
     }
 
-    public void setRoot(Node root) {
+    public void setRoot(Node root) {                //method setRoot
         this.root = root;
     }
 
-    public Node find(int dataSearch) {
-        return findHelper(dataSearch, root);
+    public Node find(int dataSearch) {                              //method find dengan parameter satu parameter yaitu dataSearch
+        return findHelper(dataSearch, root);                        //memasukan parameter dataSearch dan root ke dalam method findHelper
+                                                                    //lalu mengembalikan sebuah node yang akan dilepas
     }
 
-    private Node findHelper(int dataSearch, Node node) {
-        if (node == null || node.getData() == dataSearch) {
-            return node;
+    private Node findHelper(int dataSearch, Node node) {            //method findHelper bertipe Node dengan dua parameter, dataSearch dan node
+        if (node == null || node.getData() == dataSearch) {         //mengecek apakah node == null atau node.getData() == dataSearch
+            return node;                                            //jika ya, maka kembalikan node
         }
 
-        if (node.getData() < dataSearch) {
-            return findHelper(dataSearch, node.getRightNode());
+        if (node.getData() < dataSearch) {                          //jika node.getData() < dataSearch
+            return findHelper(dataSearch, node.getRightNode());     //maka lakukan rekursif dengan parameter detaSearch dan node.getRightNode()
         }
 
-        return findHelper(dataSearch, node.getLeftNode());
+        return findHelper(dataSearch, node.getLeftNode());          //mengembalikan node setelah melakukan method findHelper
     }
 
-    public void preOrderTraversal() {
-        Node pointer = root;
+    public void preOrderTraversal() {             //method pre order
+        Node pointer = root;                      //
         preOrderHelper(pointer);
     }
 
@@ -127,85 +128,36 @@ public class Tree {
 
         if (node == null || node.getData() != key) {
             return false;
-        }
+        } else {
+            if (node.getLeftNode() == null && node.getRightNode() == null) { // 0 node
+                parent = node.getParent();
+                if (parent.getData() > key) {
+                    parent.setLeftNode(null);
 
-        if (node.getLeftNode() == null && node.getRightNode() == null) { // 0 node
-            parent = node.getParent();
-            if (parent.getData() > key) {
-                parent.setLeftNode(null);
+                } if (parent.getData() < key) {
+                    parent.setRightNode(null);
 
-            } if (parent.getData() < key) {
-                parent.setRightNode(null);
+                }
+            } else if (node.getRightNode() == null) { //1 node
+                parent = node.getParent();
+                parent.setRightNode(node.getLeftNode());
+                node.getLeftNode().setParent(parent);
+
+                return true;
+
+            } else if (node.getLeftNode() == null) { // 1 node
+                parent = node.getParent();
+                node.getRightNode().setParent(parent);
+                parent.setLeftNode(node.getRightNode());
+
+                return true;
+            } else {    //2 node
 
             }
-        } else if (node.getRightNode() == null) { //1 node
-            parent = node.getParent();
-            parent.setRightNode(node.getLeftNode());
-            node.getLeftNode().setParent(parent);
-//            Node find = findPredeccessor(node.getLeftNode());
-//
-//            node.setData(find.getData());
-//            find.getParent().setRightNode(null);
-//            find.getParent().setLeftNode(null);
-
-//            find.getParent().setRightNode(null);
-//            find.setParent(null);
-//            node.getParent().setRightNode(null);
-//            node.getParent().setRightNode(find);
-//            find.setLeftNode(node.getLeftNode());
-
-//            node.getParent().setRightNode(find);
-//            find.setParent(node.getParent());
-//            find.setLeftNode(node.getLeftNode());
-
-            return true;
-
-        } else if (node.getLeftNode() == null) { // 1 node
-            parent = node.getParent();
-            node.getRightNode().setParent(parent);
-            parent.setLeftNode(node.getRightNode());
-
-//            Node find = findSuccessor(node.getRightNode());
-//
-//            node.setData(find.getData());
-//            find.getParent().setRightNode(null);
-//            find.getParent().setLeftNode(null);
-
-//            find.getParent().setLeftNode(null);
-//            find.setParent(null);
-//            node.getParent().setLeftNode(null);
-//            node.getParent().setLeftNode(find);
-//            find.setLeftNode(node.getRightNode());
-
-//            node.getParent().setLeftNode(find);
-//            find.setParent(node.getParent());
-//            find.setRightNode(node.getRightNode());
-
-            return true;
-        } else {
-            System.out.println("Program akan dibentuk pada pertemuan berikutnya...");
         }
 
         return false;
     }
-
-//    private void deleteZeroNode(int key, Node node) {
-//        Node curr = node;
-//
-//        while(curr.getData() != key) {
-//            if (curr.getData() > key) {
-//                curr = curr.getLeftNode();
-//            } else {
-//                curr = curr.getRightNode();
-//            }
-//        }
-//
-//        if (curr.getParent().getData() > key) { // node for 0 child
-//            curr.getParent().setLeftNode(null);
-//        } else {
-//            curr.getParent().setRightNode(null);
-//        }
-//    }
 
     private Node findPredeccessor(Node node) {
         Node curr = null;
@@ -250,5 +202,40 @@ public class Tree {
         System.out.println(curr.getData());
         printStructureV1(curr.getLeftNode(), depth + 1);
         printStructureV1(curr.getRightNode(), depth + 1);
+    }
+
+    public void cetak() {             //method pre order
+        Node node = root;                      //
+        cetakBantu(node);
+    }
+
+    private void cetakBantu(Node node) {
+        boolean isLeft, isRight;
+
+        System.out.println("nilai node: " + node.getData());
+        System.out.println("Nilai Parent: " + ((node.getParent() == null ? "tidak ada" : node.getParent().getData())));
+
+        if (node.getLeftNode() == null) {
+            isLeft = false;
+        } else {
+            System.out.println("Nilai kiri: " + node.getLeftNode().getData());
+            isLeft = true;
+        }
+
+        if (node.getRightNode() == null) {
+            isRight = false;
+        } else {
+            System.out.println("Nilai kanan: " +  node.getRightNode().getData());
+            isRight = true;
+        }
+        System.out.println();
+        if (isLeft) {
+            cetakBantu(node.getLeftNode());
+        }
+
+        if (isRight) {
+            cetakBantu(node.getRightNode());
+        }
+
     }
 }

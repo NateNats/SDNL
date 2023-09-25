@@ -10,12 +10,18 @@ public class Main {
         for (int i = 0; i < arr.length; i++) {
             p.insertNode(arr[i]);
         }
-
+//        p.printStructureV1(node, arr.length);
+//
+//        p.cetak();
         p.delete(30);
-        p.preOrderTraversal();
-
         p.delete(65);
-        System.out.println();
-        p.preOrderTraversal();
+        p.cetak();
+
+//        p.delete(30);
+//        Node n = p.find(45);
+//        System.out.println("Nilai node: " + n.getData());
+//        System.out.println("Nilai parent: " + n.getParent().getData());
+//        System.out.println("child kiri: " + ((n.getLeftNode() == null) ? "tidak ada": n.getLeftNode().getData()));
+//        System.out.println("Child kanan: " + ((n.getRightNode() == null) ? "tidak ada": n.getRightNode().getData()));
     }
 }

@@ -50,4 +50,12 @@ public class Node {
             this.setRightNode(new Node(data, this));
         }
     }
+
+//    public boolean hasLeft() {
+//        return this.getLeftNode() != null;
+//    }
+//
+//    public boolean hasRight() {
+//        return this.getRightNode() != null;
+//    }
 }
