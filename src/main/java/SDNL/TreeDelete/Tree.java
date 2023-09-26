@@ -154,11 +154,11 @@ public class Tree {
 
                 return true;
             } else {    //2 node
-
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     private Node findPredeccessor(Node node) {

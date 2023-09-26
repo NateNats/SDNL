@@ -43,11 +43,28 @@ public class Node {
         this.parent = parent;
     }
 
-    public void insert(int data) {    // Metode untuk memasukkan data baru ke dalam pohon
-        if (this.getData() > data) {  // Jika data yang akan dimasukkan lebih kecil dari data node saat ini
-            this.setLeftNode(new Node(data, this)); // Buat node baru sebagai anak kiri dengan dirinya sebagai parent
-        } else {                     // Jika data yang akan dimasukkan lebih besar atau sama dengan data node saat ini
-            this.setRightNode(new Node(data, this)); // Buat node baru sebagai anak kanan dengan dirinya sebagai parent
+    public void insert(int value) {    // Metode untuk memasukkan data baru ke dalam pohon
+        if (this.data == value) {
+            return;
+        }
+
+        insertHelper(this, value);
+    }
+
+    private void insertHelper(Node node, int value) {
+        if (node.getData() > value) {
+            if (node.getLeftNode() == null) {
+                node.setLeftNode(new Node(value, node));
+                return;
+            }
+            insertHelper(node.getLeftNode(), value);
+
+        } else if (node.getData() < value) {
+            if (node.getRightNode() == null) {
+                node.setRightNode(new Node(value, node));
+                return;
+            }
+            insertHelper(node.getRightNode(), value);
         }
     }
 
