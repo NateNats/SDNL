@@ -14,6 +14,8 @@ public class Main {
             p.insertNode(arr[i]);
         }
 
+
+
         while(true) {
             System.out.println();
             System.out.print("""
@@ -21,6 +23,7 @@ public class Main {
                     2. Masukan nilai
                     3. Tampilkan tree
                     4. Cek detail node
+                    5. Tampilkan pohon
                     Input:\s""");
             int pilihan = sc.nextInt();
             if (pilihan == 1) {
@@ -44,14 +47,16 @@ public class Main {
 
             } else if (pilihan == 4){
                 p.preOrderTraversal();
-                System.out.print("node berapa? ");
+                System.out.print("\nnode berapa? ");
                 int masukan = sc.nextInt();
                 Node n = p.getCurrent(masukan);
                 p.cetakBantu(n);
 
+            } else if (pilihan == 5){
+                p.printStructure();
+
             } else {
                 break;
-
             }
         }
     }

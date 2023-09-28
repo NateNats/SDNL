@@ -153,8 +153,22 @@ public class Tree {
                 parent.setLeftNode(node.getRightNode());                      //set parent node kanan menggunakan variabel parent
 
                 return true;
-            } else {    //2 node
-                return false;
+            } else if (node.getLeftNode() != null && node.getRightNode() != null){    //2 node
+                Node predeNode = findPredeccessor(node);
+                Node nodeParent = node.getParent();
+
+                predeNode.getParent().setRightNode(null);
+
+                predeNode.setParent(node.getParent());
+                node.setParent(null);
+
+                predeNode.setLeftNode(node.getLeftNode());
+                predeNode.setRightNode(node.getRightNode());
+
+                node.getLeftNode().setParent(predeNode);
+                node.getRightNode().setParent(predeNode);
+
+                nodeParent.setRightNode(predeNode);
             }
         }
 
@@ -162,12 +176,13 @@ public class Tree {
     }
 
     private Node findPredeccessor(Node node) {
-        Node curr = null;
-        if (node.getRightNode() == null) {
-            return node;
-        } else {
-            curr = node.getRightNode();
+        Node curr = node;
+
+        if (curr.getLeftNode().getRightNode() == null) {
+            return curr.getLeftNode();
         }
+
+        curr = curr.getLeftNode();
 
         while (curr.getRightNode() != null) {
             curr = curr.getRightNode();
@@ -177,33 +192,19 @@ public class Tree {
     }
 
     private Node findSuccessor(Node node) {
-        Node curr = null;
-        if (node.getLeftNode() == null) {
-            return node;
-        } else {
-            curr = node.getLeftNode();
+        Node curr = node;
+
+        if (curr.getRightNode().getLeftNode() == null) {
+            return curr.getRightNode();
         }
 
-        while (curr.getLeftNode() != null) {
+        curr = curr.getRightNode();
+
+        while(curr.getLeftNode() != null) {
             curr = curr.getLeftNode();
         }
 
         return curr;
-    }
-
-    public void printStructureV1(Node curr, int depth) {
-        if (curr == null) {
-            return;
-        }
-        for (int i = 0; i < depth; i++) {
-            System.out.print("\t");
-        }
-        if (depth != 0) {
-            System.out.print("\u2514\u2500");
-        }
-        System.out.println(curr.getData());
-        printStructureV1(curr.getLeftNode(), depth + 1);
-        printStructureV1(curr.getRightNode(), depth + 1);
     }
 
     public void cetak() {
@@ -237,6 +238,19 @@ public class Tree {
 
         if (isRight) {
             cetakBantu(node.getRightNode());
+        }
+    }
+    public void printStructure() {
+        printStructureV2("", root, false);
+    }
+
+    // SRC  : https://stackoverflow.com/a/42449385/17299516
+    // NOTE : On the first recursion, some-why the previous prefix printed a '|' when n is a left leaf.
+    public void printStructureV2(String prefix, Node curr, boolean isLeft) {
+        if (curr != null) {
+            System.out.println(prefix + ("└─") + curr.getData());
+            printStructureV2(prefix + ( (isLeft && curr.getRightNode() != null) ? "│   " : "    "), curr.getLeftNode(), true);
+            printStructureV2(prefix + (isLeft ? "│   " : "    "), curr.getRightNode(), false);
         }
     }
 }

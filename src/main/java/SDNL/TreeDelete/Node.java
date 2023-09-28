@@ -40,7 +40,7 @@ public class Node {
     }
 
     public void setParent(Node parent) { // Metode setter untuk mengatur node parent (induk)
-        this.parent = parent;
+       this.parent = parent;
     }
 
     public void insert(int value) {    // Metode untuk memasukkan data baru ke dalam pohon
@@ -68,12 +68,12 @@ public class Node {
         }
     }
 
-//        public boolean hasLeft() {
-//        return this.getLeftNode() != null;
-//    }
-//
-//    public boolean hasRight() {
-//        return this.getRightNode() != null;
-//    }
+        public boolean hasLeft() {
+        return this.getLeftNode() != null;
+    }
+
+    public boolean hasRight() {
+        return this.getRightNode() != null;
+    }
 
 }
