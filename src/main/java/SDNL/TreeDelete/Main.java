@@ -30,8 +30,15 @@ public class Main {
                 System.out.println("Menampilkan data secara in order: ");
                 p.inOrderTraversal();
                 System.out.print("\nMasukan nilai yang akan dihapus: ");
-                System.out.println((p.delete(sc.nextInt()) ? "Data berhasil dihapus" : "Data tidak berhasil di hapus"));
-
+                int key = sc.nextInt();
+                Node curr = p.getCurrent(key);
+                if (curr.hasLeft() && curr.hasRight()) {
+                    System.out.printf("Pada node %d, terdapat 2 anak, yaitu kiri: %d dan kanan: %d", key, curr.getLeftNode().getData(),
+                            curr.getRightNode().getData());
+                    System.out.print("\nGunakan predecessor (1) atau successor (2)?? ");
+                    p.setPredeOrSucc(sc.nextInt());
+                    System.out.println((p.delete(key) ? "Data berhasil dihapus" : "Data tidak berhasil di hapus"));
+                }
             } else if (pilihan == 2) {
                 System.out.print("Masukan nilai: ");
                 p.insertNode(sc.nextInt());
