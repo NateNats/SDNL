@@ -38,6 +38,8 @@ public class Main {
                     System.out.print("\nGunakan predecessor (1) atau successor (2)?? ");
                     p.setPredeOrSucc(sc.nextInt());
                     System.out.println((p.delete(key) ? "Data berhasil dihapus" : "Data tidak berhasil di hapus"));
+                } else {
+                    System.out.println((p.delete(key) ? "Data berhasil dihapus" : "Data tidak berhasil di hapus"));
                 }
             } else if (pilihan == 2) {
                 System.out.print("Masukan nilai: ");
