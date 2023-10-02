@@ -135,7 +135,6 @@ public class Tree {
     public boolean delete(int key) {
         Node deleteNode = getCurrent(key);
 
-
         if (deleteNode == null || deleteNode.getData() != key) {
             return false;
         }
@@ -180,7 +179,11 @@ public class Tree {
                     deleteNode.setLeftNode(null);
                     deleteNode.setRightNode(null);
                     deleteNode.setParent(null);
-                    deleteParent.setLeftNode(predeNode);
+                    if (deleteParent.getData() > predeNode.getData()) {
+                        deleteParent.setLeftNode(predeNode);
+                    } else if (deleteParent.getData() < predeNode.getData()) {
+                        deleteParent.setRightNode(predeNode);
+                    }
 
 
                     if (predeNode.getLeftNode() != null && predeNode.getParent().getData() != deleteNode.getData()) {
@@ -219,7 +222,85 @@ public class Tree {
 
             } else if (isPredeOrSucc() == 2) {                                                  //successor
                 Node succNode = findSuccessor(deleteNode);
-                
+
+                Node childLeft = deleteNode.getLeftNode();
+                Node childRight = deleteNode.getRightNode();
+                Node succParent = succNode.getParent();
+
+                if (deleteNode.getParent() == null) {                                             //succ root
+                    if (succNode.getRightNode() != null) {
+                        succNode.getRightNode().setParent(succParent);
+                        succParent.setLeftNode(succNode.getRightNode());
+
+                        succNode.setParent(null);
+                        succNode.setRightNode(null);
+                        this.setRoot(succNode);
+                        this.root.setLeftNode(childLeft);
+                        childLeft.setParent(this.root);
+                        this.root.setRightNode(childRight);
+                        childRight.setParent(this.root);
+
+                    } else if (succNode.getRightNode() == null) {
+                        succNode.setParent(null);
+                        succParent.setLeftNode(null);
+                        this.setRoot(succNode);
+                        this.root.setLeftNode(childLeft);
+                        childLeft.setParent(this.root);
+                        this.root.setRightNode(childRight);
+                        childRight.setParent(this.root);
+
+                    }
+
+                } else if (succNode.getParent() != null) {                                      //succ not root
+                    deleteNode.setLeftNode(null);
+                    deleteNode.setRightNode(null);
+                    deleteNode.setParent(null);
+                    if (deleteParent.getData() > succNode.getData()) {
+                        deleteParent.setLeftNode(succNode);
+                    } else if (deleteParent.getData() < succNode.getData()) {
+                        deleteParent.setRightNode(succNode);
+                    }
+
+                    if (succNode.getRightNode() != null && succNode.getParent().getData() != deleteNode.getData()) {
+                        succParent.setLeftNode(succNode.getRightNode());
+                        succNode.getRightNode().setParent(succParent);
+                        succNode.setParent(deleteParent);
+                        succNode.setLeftNode(childLeft);
+                        childLeft.setParent(succNode);
+                        succNode.setRightNode(childRight);
+                        childRight.setParent(succNode);
+                        succParent.setLeftNode(null);
+
+                        return true;
+
+                    } else if (succNode.getRightNode() == null && succNode.getParent().getData() != deleteNode.getData()) {
+                        succNode.setLeftNode(childLeft);
+                        childLeft.setParent(succNode);
+                        succNode.setRightNode(childRight);
+                        childRight.setParent(succNode);
+                        succParent.setLeftNode(null);
+
+                        succNode.setParent(deleteParent);
+                        succNode.setLeftNode(childLeft);
+                        childLeft.setParent(succNode);
+                        succNode.setRightNode(childRight);
+                        childRight.setParent(succNode);
+                        succParent.setLeftNode(null);
+
+                        return true;
+                    }
+
+                    if (deleteNode.getLeftNode() == null) {
+                        childRight.setParent(deleteParent);
+                        deleteParent.setRightNode(childRight);
+                        childLeft.setParent(childRight);
+                        childRight.setLeftNode(childLeft);
+
+                        return true;
+                    }
+
+
+                }
             }
         } else if (deleteNode.getRightNode() == null && deleteNode.getLeftNode() == null) { //delete 0 node
 
@@ -251,155 +332,6 @@ public class Tree {
 
         return true;
     }
-
-//    public boolean delete (int key) {               //delete dengan 1 parameter yaitu key (user input)
-//        Node node = getCurrent(key);                //METHOD GETCURRENT SAMA PERSIS SEPERTI FIND
-//        Node parent;                                //set parent menjadi null
-//
-//        if (node == null || node.getData() != key) {    //cek node adalah null atau node.getData tidak sama key
-//            return false;
-//        } else {
-//            if (node.getLeftNode() == null && node.getRightNode() == null) { // 0 node
-//                parent = node.getParent();                                   //parent menjadi node.getParent()
-//                if (parent.getData() > key) {                                //jika data parent lebih besar dari key
-//                    parent.setLeftNode(null);                                //set kiri parent menjadi null
-//                }
-//
-//                if (parent.getData() < key) {                              //jika data parent lebih besar kecil key
-//                    parent.setRightNode(null);                               //set kanan parent menjadi null
-//                }
-//
-//            } else if (node.getRightNode() == null) { //1 node           ==>> jika ditemukan node kiri
-//                parent = node.getParent();                                   //parent menjadi node.getParent()
-//                parent.setRightNode(node.getLeftNode());                     //set kanan parent agar terhubung dengan node kiri
-//                node.getLeftNode().setParent(parent);                        //set parent node kiri menggunakan variabel parent
-//
-//                return true;
-//
-//            } else if (node.getLeftNode() == null) { // 1 node           ==>> jika ditemukan node kanan
-//                parent = node.getParent();                                    //parent menjadi node.getParent()
-//                node.getRightNode().setParent(parent);                        //set kiri parent agar terhubung dengan node kanan
-//                parent.setLeftNode(node.getRightNode());                      //set parent node kanan menggunakan variabel parent
-//
-//                return true;
-//            } else if (node.getLeftNode() != null && node.getRightNode() != null){    //2 node
-//
-//                if (this.isPredeOrSucc() == 1) {
-//
-//                    Node predeNode = findPredeccessor(node);
-//
-//                    if  (node.getParent() != null) {
-//                        Node nodeParent = node.getParent();
-//                        Node predeParent = predeNode.getParent();
-//                        Node leftChild = node.getLeftNode();
-//                        Node rightChild = node.getRightNode();                                                    //kondisi ketika node memiliki parent atau mennghapus bukan node
-//                        if (predeNode.getLeftNode() == null) {
-//
-//                            predeNode.getParent().setRightNode(null);
-//
-//                            predeNode.setParent(node.getParent());
-//                            node.setParent(null);
-//
-//                        } else {
-//                            //untuk predeNode leftNode
-//
-//                            predeParent.setRightNode(predeNode.getLeftNode());
-//                            predeNode.getLeftNode().setParent(predeParent);
-//
-//                            predeNode.setParent(node.getParent());
-//                            node.setParent(null);
-//                            //  Lupa sama kodingan sendiri :(
-//
-//                        }
-//
-//                        predeNode.setLeftNode(node.getLeftNode());
-//                        predeNode.setRightNode(node.getRightNode());
-//                        leftChild.setParent(predeNode);
-//                        rightChild.setParent(predeNode);
-//                        nodeParent.setRightNode(predeNode);
-//
-//                    } else if (node.getParent() == null){               //kondisi ketika node tidak memiliki parent atau root
-//
-//                        Node nodeChildLeft = this.getRoot().getLeftNode();
-//                        Node nodeChildRight = this.getRoot().getRightNode();
-//                        Node predeParent = predeNode.getParent();
-//
-//                        if (predeNode.getLeftNode() == null) { //==> prede root left null
-//                            predeParent.setRightNode(null);
-//                            this.setRoot(predeNode);
-//                            predeNode.setLeftNode(nodeChildLeft);
-//                            predeNode.setRightNode(nodeChildRight);
-//
-//                        } else {                                //==> prede root left not null
-//                            predeParent.setRightNode(predeNode.getLeftNode());
-//                            predeNode.getLeftNode().setParent(predeParent);
-//
-//                            this.setRoot(predeNode);
-//                        }
-//                        predeNode.setParent(null);
-//                        predeNode.setLeftNode(nodeChildLeft);
-//                        nodeChildLeft.setParent(predeNode);
-//                        predeNode.setRightNode(nodeChildRight);
-//                        nodeChildRight.setParent(predeNode);
-//                    }
-//                } else if (this.isPredeOrSucc() == 2){
-//
-//                    Node succNode = findSuccessor(node);
-//
-//                    if (node.getParent() != null) {         //bukan root
-//                        Node nodeParent = node.getParent();
-//                        Node succParent = succNode.getParent();
-//                        Node leftChild = node.getLeftNode();
-//                        Node rightChild = node.getRightNode();
-//
-//                        if (succNode.getRightNode() == null) {
-//                            succNode.setParent(null);
-//                            succParent.setLeftNode(null);
-//
-//                        } else if (succNode.getRightNode() != null) {
-//                            succNode.getRightNode().setParent(null);
-//                            succNode.setParent(null);
-//                            succParent.setLeftNode(succNode.getRightNode());
-//                            succNode.setRightNode(null);
-//
-//                        }
-//
-//                        nodeParent.setRightNode(succNode);
-//                        succNode.setParent(nodeParent);
-//                        succNode.setLeftNode(leftChild);
-//                        leftChild.setParent(succNode);
-//                        succNode.setRightNode(rightChild);
-//                        rightChild.setParent(succNode);
-//
-//                    } else if(node.getParent() == null){    //root
-//                        Node succParent = succNode.getParent();
-//                        Node nodeChildLeft = this.getRoot().getLeftNode();
-//                        Node nodeChildRight = this.getRoot().getRightNode();
-//
-//                        if (succNode.getRightNode() == null) {
-//                            succNode.getParent().setLeftNode(null);
-//
-//                        } else if (succNode.getRightNode() != null) {
-//                            succParent.setLeftNode(succNode.getRightNode());
-//                            succNode.getRightNode().setParent(succNode.getParent());
-//
-//                        }
-//
-//                        this.setRoot(succNode);
-//                        succNode.setLeftNode(nodeChildLeft);
-//                        succNode.setRightNode(nodeChildRight);
-//                        nodeChildLeft.setParent(succNode);
-//                        nodeChildRight.setParent(succNode);
-//                    }
-//
-//                }
-//
-//            }
-//        }
-//        return true;
-//    }
-
-
 
     private Node findPredeccessor(Node node) {
         Node curr = node;
