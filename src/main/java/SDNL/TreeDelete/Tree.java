@@ -270,7 +270,6 @@ public class Tree {
                         succNode.setRightNode(childRight);
                         childRight.setParent(succNode);
                         succParent.setLeftNode(null);
-
                         return true;
 
                     } else if (succNode.getRightNode() == null && succNode.getParent().getData() != deleteNode.getData()) {
@@ -298,10 +297,9 @@ public class Tree {
 
                         return true;
                     }
-
-
                 }
             }
+
         } else if (deleteNode.getRightNode() == null && deleteNode.getLeftNode() == null) { //delete 0 node
 
             if (deleteParent.getData() > key) {
@@ -329,7 +327,6 @@ public class Tree {
             deleteParent.setLeftNode(child);
 
         }
-
         return true;
     }
 

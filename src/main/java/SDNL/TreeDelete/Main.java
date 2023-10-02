@@ -14,8 +14,6 @@ public class Main {
             p.insertNode(arr[i]);
         }
 
-
-
         while(true) {
             System.out.println();
             System.out.print("""
@@ -26,6 +24,7 @@ public class Main {
                     5. Tampilkan pohon
                     Input:\s""");
             int pilihan = sc.nextInt();
+
             if (pilihan == 1) {
                 System.out.println("Menampilkan data secara in order: ");
                 p.inOrderTraversal();
