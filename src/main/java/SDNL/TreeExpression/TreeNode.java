@@ -49,7 +49,7 @@ class Tree {
     }
 
     public void preOrderTraversal() {
-
+        preOrderHelper(root);
     }
 
     private void preOrderHelper(TreeNode node) {
@@ -60,5 +60,33 @@ class Tree {
         System.out.print(node.data + " ");
         preOrderHelper(node.leftNode);
         preOrderHelper(node.rightNode);
+    }
+
+    public void inOrderTraversal() {
+        inOrderHelper(root);
+    }
+
+    private void inOrderHelper(TreeNode node) {
+        if (node == null) {
+            return;
+        }
+
+        preOrderHelper(node.leftNode);
+        System.out.print(node.data + " ");
+        preOrderHelper(node.rightNode);
+    }
+
+    public void postOrderTraversal() {
+        postOrderHelper(root);
+    }
+
+    private void postOrderHelper(TreeNode node) {
+        if (node == null) {
+            return;
+        }
+
+        preOrderHelper(node.leftNode);
+        preOrderHelper(node.rightNode);
+        System.out.print(node.data + " ");
     }
 }
