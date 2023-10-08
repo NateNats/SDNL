@@ -19,14 +19,13 @@ public class ListTreeNode {
     }
 }
 
-
 class ListTree {
     private ListTreeNode firstNode;
     private ListTreeNode lastNode;
     private String name;
 
     public ListTree() {
-//        this("list");
+        this("list");
     }
 
     public ListTree(String listName) {

@@ -2,7 +2,7 @@ package SDNL.TreeExpression;
 
 public class Infix {
     KonstantaInfix karInFix = new KonstantaInfix();
-    char ung[];
+    char[] ung;
     StackTree opr;
     StackTree opd;
 
@@ -45,7 +45,7 @@ public class Infix {
                 treeKar = new TreeNode(kar);
                 if (kar == '(') {
                     opr.push(treeKar);
-                } else if (karr == ')') {
+                } else if (kar == ')') {
                     cek = opr.pop();
                     opr.push(cek);
 
@@ -64,14 +64,16 @@ public class Infix {
                         opd.push(gabung());
                         cek = opr.pop();
                         opr.push(cek);
-                        }
-
+                    }
                     opr.push(treeKar);
-                    } else if (karInFix.isOperand()) {
+
+                } else if (karInFix.isOperand()) {
                     opd.push(treeKar);
+
                 } else {
                     return null;
                 }
+
             }
         }
 
@@ -93,12 +95,20 @@ public class Infix {
 }
 
 class KonstantaInfix {
-    char operator[] = {'+', '-', '*', '/', '^'};
-    char operand[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+    char[] operator = {'+', '-', '*', '/', '^'};
+    char[] operand = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
                         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
     private char data;
 
     public KonstantaInfix() {
+    }
+
+    public char getData() {
+        return data;
+    }
+
+    public void setData(char data) {
+        this.data = data;
     }
 
     public KonstantaInfix(char data_in) {
@@ -106,8 +116,8 @@ class KonstantaInfix {
     }
 
     public boolean isOperator() {
-        for (int i = 0; i < operator.length; i++) {
-            if (data == operator[i]) {
+        for (char c : operator) {
+            if (data == c) {
                 return true;
             }
         }
@@ -115,8 +125,8 @@ class KonstantaInfix {
     }
 
     public boolean isOperand() {
-        for (int i = 0; i < operand.length; i++) {
-            if (data == operand[i]) {
+        for (char c : operand) {
+            if (data == c) {
                 return true;
             }
         }

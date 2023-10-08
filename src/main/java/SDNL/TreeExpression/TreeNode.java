@@ -27,8 +27,6 @@ public class TreeNode {
     }
 }
 
-
-
 class Tree {
     private TreeNode root;
 
