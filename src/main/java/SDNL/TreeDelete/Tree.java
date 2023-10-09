@@ -3,6 +3,8 @@ package SDNL.TreeDelete;
 public class Tree {
     private Node root;
     private int predeOrSucc;
+    private int jumlahLeaves;
+    private int jumlahInternal;
 
     public Tree() {
         this.root = null;
@@ -18,6 +20,14 @@ public class Tree {
 
     public void setPredeOrSucc(int predeOrSucc) {
         this.predeOrSucc = predeOrSucc;
+    }
+
+    public int getJumlahLeaves() {
+        return jumlahLeaves;
+    }
+
+    public int getJumlahInternal() {
+        return jumlahInternal;
     }
 
     public Node getRoot() {                         //method getRoot
@@ -365,6 +375,8 @@ public class Tree {
     public void cetak() {
         Node node = root;
         cetakBantu(node);
+        System.out.println("Jumlah leave node: " + getJumlahLeaves());
+        System.out.println("Jumlah internal node: " + getJumlahInternal());
     }
 
     public void cetakBantu(Node node) {
@@ -386,7 +398,17 @@ public class Tree {
             System.out.println("Nilai kanan: " +  node.getRightNode().getData());
             isRight = true;
         }
+
+        if (node.getRightNode() == null &&  node.getLeftNode() == null) {
+            jumlahLeaves++;
+        }
+
+        if ((node.getRightNode() != null) || (node.getLeftNode() != null) || (node.getRightNode() != null && node.getLeftNode() != null)) {
+            jumlahInternal++;
+        }
+
         System.out.println();
+
         if (isLeft) {
             cetakBantu(node.getLeftNode());
         }

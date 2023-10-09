@@ -22,6 +22,7 @@ public class ListTreeNode {
 class ListTree {
     private ListTreeNode firstNode;
     private ListTreeNode lastNode;
+
     private String name;
 
     public ListTree() {
@@ -31,6 +32,14 @@ class ListTree {
     public ListTree(String listName) {
         this.name = listName;
         firstNode = lastNode = null;
+    }
+
+    public ListTreeNode getFirstNode() {
+        return firstNode;
+    }
+
+    public ListTreeNode getLastNode() {
+        return lastNode;
     }
 
     public void insertAtFront(TreeNode insertItem) {

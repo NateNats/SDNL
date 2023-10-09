@@ -2,9 +2,11 @@ package SDNL.TreeExpression;
 
 public class StackTree {
     private ListTree stackListTree;
+    private int front;
 
     public StackTree() {
         stackListTree = new ListTree();
+        front = 0;
     }
 
     public void push(TreeNode node) {
@@ -13,7 +15,6 @@ public class StackTree {
 
     public TreeNode pop() {
         if (!isEmpty()) {
-
             return stackListTree.removeFromFront();
         }
 
@@ -21,7 +22,7 @@ public class StackTree {
     }
 
     public boolean isEmpty() {
-        return true;
+        return stackListTree.isEmpty();
     }
 
     public void print() {}

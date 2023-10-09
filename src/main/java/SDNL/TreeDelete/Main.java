@@ -54,11 +54,13 @@ public class Main {
                 System.out.println();
 
             } else if (pilihan == 4){
-                p.preOrderTraversal();
-                System.out.print("\nnode berapa? ");
-                int masukan = sc.nextInt();
-                Node n = p.getCurrent(masukan);
-                p.cetakBantu(n);
+//                p.preOrderTraversal();
+//                System.out.print("\nnode berapa? ");
+//                int masukan = sc.nextInt();
+//                Node n = p.getCurrent(masukan);
+//                p.cetakBantu(n);
+
+                p.cetak();
 
             } else if (pilihan == 5){
                 p.printStructure();
