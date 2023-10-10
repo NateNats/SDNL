@@ -14,14 +14,17 @@ public class Main {
             p.insertNode(arr[i]);
         }
 
+        System.out.println("PROGRAM SIAPA?? PORGRAM SAYA");
         while(true) {
-            System.out.println();
             System.out.print("""
+                    
                     1. Hapus nilai
                     2. Masukan nilai
-                    3. Tampilkan tree
+                    3. Tampilkan tree secara Pre order, In order dan Post order
                     4. Cek detail node
                     5. Tampilkan pohon
+                    6. Descendant
+                    7. Leaf
                     Input:\s""");
             int pilihan = sc.nextInt();
 
@@ -54,16 +57,23 @@ public class Main {
                 System.out.println();
 
             } else if (pilihan == 4){
-//                p.preOrderTraversal();
-//                System.out.print("\nnode berapa? ");
-//                int masukan = sc.nextInt();
-//                Node n = p.getCurrent(masukan);
-//                p.cetakBantu(n);
-
-                p.cetak();
+                p.preOrderTraversal();
+                System.out.print("\nnode berapa? ");
+                int masukan = sc.nextInt();
+                Node n = p.getCurrent(masukan);
+                p.cetakBantu(n);
+//
+//                p.cetak();
 
             } else if (pilihan == 5){
                 p.printStructure();
+
+            } else if (pilihan == 6){
+                System.out.print("masukan nilai: ");
+                p.descendant(sc.nextInt());
+
+            } else if (pilihan == 7){
+                p.leaf();
 
             } else {
                 break;

@@ -399,10 +399,6 @@ public class Tree {
             isRight = true;
         }
 
-        if (node.getRightNode() == null &&  node.getLeftNode() == null) {
-            jumlahLeaves++;
-        }
-
         if ((node.getRightNode() != null) || (node.getLeftNode() != null) || (node.getRightNode() != null && node.getLeftNode() != null)) {
             jumlahInternal++;
         }
@@ -417,6 +413,85 @@ public class Tree {
             cetakBantu(node.getRightNode());
         }
     }
+
+    public void leaf() {
+        jumlahLeaves = 0;
+        leafHelper(root);
+        System.out.printf("Jumlah leaves: %s\n", jumlahLeaves);
+
+    }
+    private void leafHelper(Node node) {
+        boolean isLeft, isRight;
+
+        isLeft = node.getLeftNode() != null;
+
+        isRight = node.getRightNode() != null;
+
+        if (node.getRightNode() == null &&  node.getLeftNode() == null) {
+            System.out.printf("leaf node dari %d adalah %d\n", node.getParent().getData(), node.getData());
+            jumlahLeaves++;
+        }
+
+        if (isLeft) {
+            leafHelper(node.getLeftNode());
+        }
+
+        if (isRight) {
+            leafHelper(node.getRightNode());
+        }
+    }
+
+    public void internalNode() {
+
+    }
+
+    public void height(int value) {     //prefix
+        Node current = getCurrent(value);
+    }
+
+    public void depth(int value) {
+        Node current = getCurrent(value);
+    }
+
+    public void descendant(int value) {
+        Node current = getCurrent(value);
+        if (current == null) {
+            return;
+        }
+        System.out.printf("Node %d: ", current.getData());
+        descendantHelper(current);
+    }
+
+    private void descendantHelper(Node node) { //belum selesai
+        boolean isLeft = false, isRight = false;
+
+        if (node.getLeftNode() != null) {
+            System.out.print(node.getLeftNode().getData());
+            System.out.print(", ");
+
+            if (node.getLeftNode().getLeftNode() != null || node.getLeftNode().getRightNode() != null) {
+                isLeft = true;
+            }
+        }
+
+        if (node.getRightNode() != null) {
+
+            System.out.print(node.getRightNode().getData());
+            System.out.print(", ");
+            if (node.getRightNode().getLeftNode() != null || node.getRightNode().getRightNode() != null) {
+                isRight = true;
+            }
+        }
+
+        if (isLeft) {
+            descendantHelper(node.getLeftNode());
+        }
+
+        if (isRight) {
+            descendantHelper(node.getRightNode());
+        }
+    }
+
     public void printStructure() {
         printStructureV2("", root, false);
     }

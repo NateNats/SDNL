@@ -1,5 +1,6 @@
 package SDNL.TreeExpression;
 
+
 public class StackTree {
     private ListTree stackListTree;
     private int front;
@@ -25,5 +26,7 @@ public class StackTree {
         return stackListTree.isEmpty();
     }
 
-    public void print() {}
+    public void print() {
+        stackListTree.print();
+    }
 }
