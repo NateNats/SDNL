@@ -10,11 +10,10 @@ public class Main {
 
         int[] arr = {21, 38, 27, 71, 82, 55, 63, 6, 2, 40, 12};
 
-        for (int i = 0; i < arr.length; i++) {
-            p.insertNode(arr[i]);
+        for (int j : arr) {
+            p.insertNode(j);
         }
 
-        System.out.println("PROGRAM SIAPA?? PORGRAM SAYA");
         while(true) {
             System.out.print("""
                     
@@ -25,6 +24,8 @@ public class Main {
                     5. Tampilkan pohon
                     6. Descendant
                     7. Leaf
+                    8. Depth
+                    9. Height
                     Input:\s""");
             int pilihan = sc.nextInt();
 
@@ -33,7 +34,7 @@ public class Main {
                 p.inOrderTraversal();
                 System.out.print("\nMasukan nilai yang akan dihapus: ");
                 int key = sc.nextInt();
-                Node curr = p.getCurrent(key);
+                Node curr = p.search(key);
                 if (curr.hasLeft() && curr.hasRight()) {
                     System.out.printf("Pada node %d, terdapat 2 anak, yaitu kiri: %d dan kanan: %d", key, curr.getLeftNode().getData(),
                             curr.getRightNode().getData());
@@ -60,7 +61,7 @@ public class Main {
                 p.preOrderTraversal();
                 System.out.print("\nnode berapa? ");
                 int masukan = sc.nextInt();
-                Node n = p.getCurrent(masukan);
+                Node n = p.search(masukan);
                 p.cetakBantu(n);
 //
 //                p.cetak();
@@ -71,10 +72,16 @@ public class Main {
             } else if (pilihan == 6){
                 System.out.print("masukan nilai: ");
                 p.descendant(sc.nextInt());
+                System.out.println();
 
             } else if (pilihan == 7){
                 p.leaf();
-
+            } else if (pilihan == 8) {
+                System.out.print("Masukan nilai: ");
+                p.depth(sc.nextInt());
+            } else if (pilihan == 9){
+                System.out.print("Masukan nilai: ");
+                p.height(sc.nextInt());
             } else {
                 break;
             }

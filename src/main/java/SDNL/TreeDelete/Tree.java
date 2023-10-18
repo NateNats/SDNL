@@ -73,21 +73,21 @@ public class Tree {
     }
 
 
-    public Node getCurrent(int dataSearch) {                              //method find dengan parameter satu parameter yaitu dataSearch
-        return getCurrentHelper(dataSearch, root);                        //memasukan parameter dataSearch dan root ke dalam method findHelper
+    public Node search(int dataSearch) {                              //method find dengan parameter satu parameter yaitu dataSearch
+        return searchHelper(dataSearch, root);                        //memasukan parameter dataSearch dan root ke dalam method findHelper
                                                                     //lalu mengembalikan sebuah node yang akan dilepas
     }
 
-    private Node getCurrentHelper(int dataSearch, Node node) {            //method findHelper bertipe Node dengan dua parameter, dataSearch dan node
+    private Node searchHelper(int dataSearch, Node node) {            //method findHelper bertipe Node dengan dua parameter, dataSearch dan node
         if (node == null || node.getData() == dataSearch) {         //mengecek apakah node == null atau node.getData() == dataSearch
             return node;                                            //jika ya, maka kembalikan node
         }
 
         if (node.getData() < dataSearch) {                          //jika node.getData() < dataSearch
-            return getCurrentHelper(dataSearch, node.getRightNode());     //maka lakukan rekursif dengan parameter detaSearch dan node.getRightNode()
+            return searchHelper(dataSearch, node.getRightNode());     //maka lakukan rekursif dengan parameter detaSearch dan node.getRightNode()
         }
 
-        return getCurrentHelper(dataSearch, node.getLeftNode());          //mengembalikan node setelah melakukan method findHelper
+        return searchHelper(dataSearch, node.getLeftNode());          //mengembalikan node setelah melakukan method findHelper
     }
 
     public void preOrderTraversal() {             //method pre order
@@ -143,7 +143,7 @@ public class Tree {
     }
 
     public boolean delete(int key) {
-        Node deleteNode = getCurrent(key);
+        Node deleteNode = search(key);
 
         if (deleteNode == null || deleteNode.getData() != key) {
             return false;
@@ -375,8 +375,6 @@ public class Tree {
     public void cetak() {
         Node node = root;
         cetakBantu(node);
-        System.out.println("Jumlah leave node: " + getJumlahLeaves());
-        System.out.println("Jumlah internal node: " + getJumlahInternal());
     }
 
     public void cetakBantu(Node node) {
@@ -441,20 +439,58 @@ public class Tree {
         }
     }
 
-    public void internalNode() {
+    public void height(int value) {     //prefix
+        int count = 1;
+        int hasil = heightHelper(root, value, count);
+
+        System.out.println(hasil != -1 ? ("node " + value + " berada di height: " + hasil) : ("node " + value + " tidak ditemukan"));
 
     }
 
-    public void height(int value) {     //prefix
-        Node current = getCurrent(value);
+    private int heightHelper(Node node, int value, int height) {
+        if (node == null) {
+            return -1;
+        }
+
+        if (node.getData() == value) {
+            return height;
+        }
+
+        int leftHeight = heightHelper(node.getLeftNode(), value, height+1);
+
+        if (leftHeight != -1) {
+            return leftHeight;
+        }
+
+        return heightHelper(node.getRightNode(), value, height+1);
     }
 
     public void depth(int value) {
-        Node current = getCurrent(value);
+        int ketemu = depthHelper(root, value, 0);
+        System.out.println("Depth dari node " + value + " adalah " + ketemu);
     }
 
+    private int depthHelper(Node node, int data, int depth) {
+        if (node == null) {
+            return -1;
+        }
+
+        if (node.getData() == data) {
+            return depth;
+        }
+
+        int leftDepth = depthHelper(node.getLeftNode(), data, depth+1);
+
+        if (leftDepth != -1) {
+            return leftDepth;
+        }
+
+        return depthHelper(node.getRightNode(), data, depth+1);
+    }
+
+
     public void descendant(int value) {
-        Node current = getCurrent(value);
+        Node current = search(value);
         if (current == null) {
             return;
         }
@@ -467,7 +503,7 @@ public class Tree {
 
         if (node.getLeftNode() != null) {
             System.out.print(node.getLeftNode().getData());
-            System.out.print(", ");
+            System.out.print(" ");
 
             if (node.getLeftNode().getLeftNode() != null || node.getLeftNode().getRightNode() != null) {
                 isLeft = true;
@@ -477,7 +513,7 @@ public class Tree {
         if (node.getRightNode() != null) {
 
             System.out.print(node.getRightNode().getData());
-            System.out.print(", ");
+            System.out.print(" ");
             if (node.getRightNode().getLeftNode() != null || node.getRightNode().getRightNode() != null) {
                 isRight = true;
             }

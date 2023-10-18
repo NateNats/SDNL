@@ -51,20 +51,20 @@ public class Node {
         insertHelper(this, value);
     }
 
-    private void insertHelper(Node node, int value) {
+    private void insertHelper(Node node, int value) {       //method insertHelper
         if (node.getData() > value) {
             if (node.getLeftNode() == null) {
                 node.setLeftNode(new Node(value, node));
                 return;
             }
-            insertHelper(node.getLeftNode(), value);
+            insertHelper(node.getLeftNode(), value);        //rekursif
 
         } else if (node.getData() < value) {
             if (node.getRightNode() == null) {
                 node.setRightNode(new Node(value, node));
                 return;
             }
-            insertHelper(node.getRightNode(), value);
+            insertHelper(node.getRightNode(), value);       //rekursif
         }
     }
 
