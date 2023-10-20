@@ -166,9 +166,7 @@ class Tree {
         if (node.getRightNode() != null) {
             posOrderHelper(node.getRightNode());
         }
-
         System.out.print(node.getData() + " ");
-
     }
 }
 
