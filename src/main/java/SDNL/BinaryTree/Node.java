@@ -5,6 +5,7 @@ public class Node <T extends Comparable<T>> implements Comparable<Node<T>> {
     private Node<T> leftNode;
     private Node<T> rightNode;
     private Node<T> parent;
+    int height;
 
     public Node(T data) {
         this.data = data;
@@ -44,6 +45,39 @@ public class Node <T extends Comparable<T>> implements Comparable<Node<T>> {
 
     public void setParent(Node<T> parent) {
         this.parent = parent;
+    }
+
+    public boolean hasLeft() {
+        return leftNode != null;
+    }
+
+    public boolean hasRight() {
+        return rightNode != null;
+    }
+
+    public void insert(T value) {
+        if (this.data == value) {
+            return;
+        }
+
+        insertHelper(value, this);
+    }
+
+    private void insertHelper(T value, Node<T> node) {
+        Node<T> newNode = new Node<>(value);
+
+        if (node.getLeftNode() == null) {
+            node.setLeftNode(newNode);
+            newNode.setParent(node);
+        } else {
+            node.setRightNode(newNode);
+            newNode.setParent(node);
+
+        }
+    }
+
+    private int height(Node<T> node) {
+        return 0;
     }
 
     @Override
