@@ -88,8 +88,8 @@ public class Tree <T extends Comparable<T>> {
             tempParent = node.getParent();
 
             if (node.hasLeft() && node.hasRight()) {            //node 2
-                int left = depthHelper(node.getLeftNode());
-                int right = depthHelper(node.getRightNode());
+                int left =heightHelper(node.getLeftNode());
+                int right = heightHelper(node.getRightNode());
 
                 Node<T> curr;
                 T val;
@@ -103,9 +103,6 @@ public class Tree <T extends Comparable<T>> {
                         val = curr.getData();
                     }
 
-                    node.setData(val);
-                    deleteHelper(val, curr);
-
                 } else {
                     curr = getSuccessor(node);
 
@@ -115,9 +112,10 @@ public class Tree <T extends Comparable<T>> {
                         val = curr.getData();
                     }
 
-                    node.setData(val);
-                    deleteHelper(val, curr);
                 }
+
+                node.setData(val);
+                deleteHelper(val, curr);
 
             } else if (node.hasLeft()) {                        //node 1
                 tempNode = node.getLeftNode();
@@ -230,16 +228,47 @@ public class Tree <T extends Comparable<T>> {
         System.out.print(node.getData() + " ");
     }
 
-    public void depth() {
-        System.out.print("Depth tree: ");
-        System.out.println(depthHelper(root));
+    public void depth(T value) {
+        System.out.printf("Depth node %s: %d", value, depthHelper(root, value, 0));
+        System.out.println();
+//        System.out.printf("Depth min node %s: %d", value, minDepthHelper(find(value)));
     }
 
-    private int depthHelper(Node<T> node) {
-        if (node == null) return 0;
+    private int depthHelper(Node<T> node, T key, int depth) {
+        if (node == null) return -1;
 
-        int left = depthHelper(node.getLeftNode());
-        int right = depthHelper(node.getRightNode());
+        if (node.getData() == key) {
+            return depth;
+        } else if (node.getData().compareTo(key) > 0) {
+            return depthHelper(node.getLeftNode(), key, depth + 1);
+        } else {
+            return depthHelper(node.getRightNode(), key, depth + 1);
+        }
+    }
+
+//    private int minDepthHelper(Node<T> node) {
+//        if (node == null) return -1;
+//
+//        int left = minDepthHelper(node.getLeftNode());
+//        int right = minDepthHelper(node.getRightNode());
+//
+//        if (left == 0 || right == 0) {
+//            return Math.min(left, right) + 1;
+//        }
+//
+//        return Math.max(left, right) + 1;
+//    }
+
+    public void height(T value) {
+        Node<T> node = find(value);
+        System.out.printf("height Node %s: %d\n", value, heightHelper(node));
+    }
+
+    private int heightHelper(Node<T> node) {
+        if (node == null) return -1;
+
+        int left = heightHelper(node.getLeftNode());
+        int right = heightHelper(node.getRightNode());
 
         return Math.max(left, right) + 1;
     }
@@ -258,6 +287,46 @@ public class Tree <T extends Comparable<T>> {
 
         // then print left child
         printTree(root.getLeftNode(), "     " + spaces);
+    }
+
+    public void descendant(T value) {
+        Node<T> current = find(value);
+        if (current == null) {
+            return;
+        }
+        System.out.printf("Node %s: ", current.getData());
+        descendantHelper(current);
+        System.out.println();
+    }
+
+    private void descendantHelper(Node<T> node) { //belum selesai
+        boolean isLeft = false, isRight = false;
+
+        if (node.getLeftNode() != null) {
+            System.out.print(node.getLeftNode().getData());
+            System.out.print(" ");
+
+            if (node.getLeftNode().getLeftNode() != null || node.getLeftNode().getRightNode() != null) {
+                isLeft = true;
+            }
+        }
+
+        if (node.getRightNode() != null) {
+
+            System.out.print(node.getRightNode().getData());
+            System.out.print(" ");
+            if (node.getRightNode().getLeftNode() != null || node.getRightNode().getRightNode() != null) {
+                isRight = true;
+            }
+        }
+
+        if (isLeft) {
+            descendantHelper(node.getLeftNode());
+        }
+
+        if (isRight) {
+            descendantHelper(node.getRightNode());
+        }
     }
 
     public void detailNode(Node<T> node) {

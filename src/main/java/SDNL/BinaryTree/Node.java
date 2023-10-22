@@ -76,10 +76,6 @@ public class Node <T extends Comparable<T>> implements Comparable<Node<T>> {
         }
     }
 
-    private int height(Node<T> node) {
-        return 0;
-    }
-
     @Override
     public int compareTo(Node<T> o) {
         return this.getData().compareTo(o.getData());

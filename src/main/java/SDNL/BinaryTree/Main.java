@@ -21,8 +21,9 @@ public class Main {
                     3. Pre-in-post order
                     4. Print
                     5. detail node
-                    6. Depth
-                    7. Exit
+                    6. Height dan Depth
+                    7. Descendant
+                    8. Exit
                     Input:\s""");
             int choice = input.nextInt();
 
@@ -57,11 +58,20 @@ public class Main {
                 p.detailNode(p.find(input.nextInt()));
 
             } else if (choice == 6) {
-                p.depth();
+                p.inOrderTraversal();
+                System.out.print("\nMencari node: ");
+                int key = input.nextInt();
+                p.height(key);
+                p.depth(key);
 
             } else if (choice == 7) {
-                break;
+                p.inOrderTraversal();
+                System.out.print("\nMencari descendant node: ");
+                int key = input.nextInt();
+                p.descendant(key);
 
+            } else if (choice == 8) {
+                break;
             }
         }
     }
