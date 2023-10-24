@@ -58,7 +58,6 @@ public class Tree {
                     curr = curr.getLeftNode();
                 }
 
-
             } else {                                //menentukan letak dari node yang akan masuk di sebelah kanan
                 if (curr.getRightNode() == null) {  //mengecek apakah value getRightNode == null
                     curr.setRightNode(newNode);     /* jika ya, maka curr akan menjadikan newNode sebagai node barunya */
@@ -182,7 +181,6 @@ public class Tree {
                         this.root.setRightNode(childRight);
                         childRight.setParent(this.root);
                     }
-
 
                 } else if (deleteNode.getParent() != null) {                                     //prede non root
 

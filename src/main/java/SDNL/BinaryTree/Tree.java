@@ -231,7 +231,6 @@ public class Tree <T extends Comparable<T>> {
     public void depth(T value) {
         System.out.printf("Depth node %s: %d", value, depthHelper(root, value, 0));
         System.out.println();
-//        System.out.printf("Depth min node %s: %d", value, minDepthHelper(find(value)));
     }
 
     private int depthHelper(Node<T> node, T key, int depth) {
@@ -246,18 +245,6 @@ public class Tree <T extends Comparable<T>> {
         }
     }
 
-//    private int minDepthHelper(Node<T> node) {
-//        if (node == null) return -1;
-//
-//        int left = minDepthHelper(node.getLeftNode());
-//        int right = minDepthHelper(node.getRightNode());
-//
-//        if (left == 0 || right == 0) {
-//            return Math.min(left, right) + 1;
-//        }
-//
-//        return Math.max(left, right) + 1;
-//    }
 
     public void height(T value) {
         Node<T> node = find(value);
